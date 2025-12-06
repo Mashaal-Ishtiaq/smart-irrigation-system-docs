@@ -1,0 +1,166 @@
+openapi: 3.0.3
+info:
+title: Smart Irrigation System API
+description: Backend API for sensor ingestion, rule engine decisions, irrigation logs, and ET calculations.
+version: 1.0.0
+
+servers:
+
+* url: [http://localhost:8000](http://localhost:8000)
+  description: Local Development Server
+* url: [https://api.smart-irrigation.com](https://api.smart-irrigation.com)
+  description: Production Server
+
+paths:
+/sensor-data:
+post:
+summary: Submit sensor readings from IoT gateway
+tags: [Sensor]
+requestBody:
+required: true
+content:
+application/json:
+schema:
+$ref: "#/components/schemas/SensorData"
+responses:
+"201":
+description: Sensor data stored successfully
+"400":
+description: Invalid data format
+
+/sensor-data/latest:
+get:
+summary: Get latest sensor readings
+tags: [Sensor]
+responses:
+"200":
+description: Latest sensor data
+content:
+application/json:
+schema:
+$ref: "#/components/schemas/SensorData"
+
+/irrigation/decision:
+get:
+summary: Get irrigation decision from rule engine
+tags: [Rule Engine]
+responses:
+"200":
+description: Decision retrieved
+content:
+application/json:
+schema:
+$ref: "#/components/schemas/IrrigationDecision"
+
+/irrigation/log:
+post:
+summary: Store irrigation activity log (ON/OFF + duration)
+tags: [Irrigation]
+requestBody:
+required: true
+content:
+application/json:
+schema:
+$ref: "#/components/schemas/IrrigationLog"
+responses:
+"201":
+description: Log saved
+
+/et/calculate:
+post:
+summary: Calculate Evapotranspiration (ET0) using PyETo
+tags: [ET]
+requestBody:
+required: true
+content:
+application/json:
+schema:
+$ref: "#/components/schemas/ETInput"
+responses:
+"200":
+description: ET0 value calculated
+content:
+application/json:
+schema:
+$ref: "#/components/schemas/ETOutput"
+
+components:
+schemas:
+
+```
+SensorData:
+  type: object
+  properties:
+    soil_moisture:
+      type: number
+      example: 42.5
+    temperature:
+      type: number
+      example: 30.1
+    humidity:
+      type: number
+      example: 55.3
+    rainfall:
+      type: number
+      example: 0
+    water_level:
+      type: number
+      example: 60
+    timestamp:
+      type: string
+      example: "2025-12-06T12:45:00Z"
+
+IrrigationDecision:
+  type: object
+  properties:
+    action:
+      type: string
+      enum: [IRRIGATE, SKIP, DELAY]
+      example: IRRIGATE
+    reason:
+      type: string
+      example: "Soil moisture below threshold"
+    recommended_duration_minutes:
+      type: number
+      example: 12
+
+IrrigationLog:
+  type: object
+  properties:
+    status:
+      type: string
+      enum: [ON, OFF]
+      example: ON
+    duration:
+      type: number
+      example: 10
+    timestamp:
+      type: string
+      example: "2025-12-06T13:00:00Z"
+
+ETInput:
+  type: object
+  properties:
+    temperature:
+      type: number
+      example: 31.2
+    humidity:
+      type: number
+      example: 50
+    wind_speed:
+      type: number
+      example: 2.5
+    solar_radiation:
+      type: number
+      example: 18.2
+
+ETOutput:
+  type: object
+  properties:
+    et0:
+      type: number
+      example: 4.21
+    method:
+      type: string
+      example: "FAO Penman-Monteith"
+```
