@@ -19,42 +19,37 @@ The system is divided into **three main layers**:
 
 ```mermaid
 flowchart TD
-
-    subgraph Physical Layer
-        S1[Soil Moisture Sensor]
-        S2[Temperature Sensor]
-        S3[Humidity Sensor]
-        S4[Rain Sensor]
-        S5[Water Level Sensor]
-        GW[IoT Gateway ESP32]
+    subgraph "Physical Layer"
+        SM[Soil Moisture Sensor] --> GW[IoT Gateway ESP32]
+        TS[Temperature Sensor] --> GW
+        HS[Humidity Sensor] --> GW
+        RS[Rain Sensor] --> GW
+        LS[Light / Solar Radiation Sensor] --> GW
+        WS[Water Level Sensor] --> GW
     end
 
-    subgraph Control Layer
+    subgraph "Control Layer"
         API[Backend API]
         RE[Rule Engine]
         ET[ET Calculator - PyETo]
-        DB[(Database)]
+        DB[(PostgreSQL Database)]
     end
 
-    subgraph Display Layer
+    subgraph "Display Layer"
         FE[Web Dashboard]
         MOB[Mobile App]
     end
 
-    S1 --> GW
-    S2 --> GW
-    S3 --> GW
-    S4 --> GW
-    S5 --> GW
-
+    %% Data flow
     GW --> API
     API --> DB
     API --> RE
     RE --> ET
     RE --> API
-
     API --> FE
     API --> MOB
+
+   
 ```
 
 ---
@@ -102,16 +97,17 @@ flowchart TD
 4. Rule Engine checks thresholds, ET values
 5. Decision:
 
-   * **Irrigate now**
-   * **Delay irrigation**
-   * **Skip irrigation**
+   - **Irrigate now**
+   - **Delay irrigation**
+   - **Skip irrigation**
+
 6. Dashboard receives data → Graphs & real-time update
 
 ---
 
 ## **5. Future Enhancements**
 
-* ML-based irrigation prediction
-* Multi-field support
-* Weather API integration
-* Automatic anomaly detection
+- ML-based irrigation prediction
+- Multi-field support
+- Weather API integration
+- Automatic anomaly detection

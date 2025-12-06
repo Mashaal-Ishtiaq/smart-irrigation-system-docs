@@ -1,17 +1,20 @@
+
+
 # Troubleshooting Guide – Smart Irrigation System
 
 This guide helps developers, technicians, and operators identify and fix common issues.
 
 ---
 
-## 1. Backend Issues
+## 1. Backend / Dashboard Issues
 
-| Problem                  | Possible Cause                | Solution                                                        |
-| ------------------------ | ----------------------------- | --------------------------------------------------------------- |
-| Backend not starting     | Missing `.env` variables      | Check `.env` file and restart backend                           |
-| Python dependency errors | `requirements.txt` outdated   | Run `pip3 install -r requirements.txt`                          |
-| API returns 500          | Rule engine crash or DB error | Check logs: `docker logs irrigation-backend`                    |
-| Port 8000 already in use | Another app running           | Change port in `docker-compose.yml` or stop conflicting service |
+| Problem                                   | Possible Cause                | Solution                                                          |
+| ----------------------------------------- | ----------------------------- | ----------------------------------------------------------------- |
+| Backend not starting                      | Missing `.env` variables      | Check `.env` file and restart backend                             |
+| Python dependency errors                  | `requirements.txt` outdated   | Run `pip3 install -r requirements.txt`                            |
+| API returns 500                           | Rule engine crash or DB error | Check logs: `docker logs irrigation-backend`                      |
+| Port 8000 already in use                  | Another app running           | Change port in `docker-compose.yml` or stop conflicting service   |
+| Mobile app/dashboard shows wrong readings | Backend API or sensor delay   | Refresh dashboard, check backend logs, verify sensor connectivity |
 
 ---
 
@@ -82,3 +85,6 @@ This guide helps developers, technicians, and operators identify and fix common 
 * Use version control for `openapi.yaml` to track API changes.
 * Perform back-testing for rule engine thresholds after major changes.
 * Restart services in order: DB → Backend → Swagger UI.
+
+---
+

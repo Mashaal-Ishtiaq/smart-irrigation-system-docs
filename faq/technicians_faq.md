@@ -84,3 +84,9 @@ This FAQ is for technicians and operators. It explains the system in **simple, n
 * Turn off the pump manually if water overflows.
 * Reboot the ESP32 gateway if sensors are unresponsive.
 * Restart backend containers if the dashboard or rule engine stops responding.
+
+
+## 11. How do I adjust soil moisture thresholds?
+
+* Thresholds are defined in **rule-engine/engine.py** as constants: 
+**LOWER_LIMIT = 30** and **UPPER_LIMIT = 70**. Edit these values and restart the backend.

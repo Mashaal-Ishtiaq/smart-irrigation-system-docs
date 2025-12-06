@@ -61,7 +61,7 @@ Add:
 
 ```
 DB_URL=postgresql://admin:pass@db:5432/irrigation
-WEATHER_API_KEY=YOUR_KEY
+WEATHER_API_KEY=YOUR_KEY      # API key for weather forecast integration
 ET_MODE=hybrid
 ```
 
@@ -266,26 +266,27 @@ docker-compose up --build -d
 
 # 11. Production Hardening (Optional)
 
-* Add HTTPS using Certbot
-* Enable UFW firewall
-* Use Docker secrets
-* Enable auto-restart via Docker policies
-* Add fail2ban for brute-force protection
+- Add HTTPS using Certbot
+- Enable UFW firewall
+- Use Docker secrets
+- Enable auto-restart via Docker policies
+- Add fail2ban for brute-force protection
 
 ---
 
 # 12. Final Deployment Checklist
 
-* [ ] Docker running
-* [ ] Backend reachable
-* [ ] DB initialized
-* [ ] Rule engine connected
-* [ ] Swagger UI visible
-* [ ] Logs clean
-* [ ] Nginx proxy working
+- [ ] Docker running
+- [ ] Backend reachable
+- [ ] DB initialized
+- [ ] Rule engine connected
+- [ ] Swagger UI visible
+- [ ] Logs clean
+- [ ] Nginx proxy working
 
 ---
 
 # 13. Next Step
 
-→ Add **troubleshooting.md** and **FAQ.md** to complete the package.
+→ Review **troubleshooting_guide.md** and **technicians_faq.md** for operational guidance.
+
